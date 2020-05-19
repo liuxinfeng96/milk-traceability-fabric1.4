@@ -1,0 +1,52 @@
+{
+    "name": "Sales",
+    "version": "1.0.0",
+    "client": {
+        "organization": "Sales",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                },
+                "orderer": "300"
+            }
+        }
+    },
+    "channels": {
+        "firstchannel": {
+            "orderers": [
+                "orderer.example.com"
+            ],
+            "peers": {
+                "peer0.sales.example.com": {}
+            }
+        }
+    },
+    "organizations": {
+        "Sales": {
+            "mspid": "SalesMSP",
+            "peers": [
+                "peer0.sales.example.com"
+            ],
+            "certificateAuthorities": [
+                "ca.sales.example.com"
+            ]
+        }
+    },
+    "orderers": {
+        "orderer.example.com": {
+            "url": "grpc://localhost:7050"
+        }
+    },
+    "peers": {
+        "peer0.sales.example.com": {
+            "url": "grpc://localhost:9051"
+        }
+    },
+    "certificateAuthorities": {
+        "ca.sales.example.com": {
+            "url": "http://localhost:9054",
+            "caName": "ca-sales"
+        }
+    }
+}

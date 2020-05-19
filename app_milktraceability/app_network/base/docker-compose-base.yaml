@@ -1,0 +1,110 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+services:
+
+  orderer.example.com:
+    container_name: orderer.example.com
+    extends:
+      file: peer-base.yaml
+      service: orderer-base
+    volumes:
+        - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+        - ../crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp:/var/hyperledger/orderer/msp
+        - ../crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/:/var/hyperledger/orderer/tls
+        - orderer.example.com:/var/hyperledger/production/orderer
+    ports:
+      - 7050:7050
+
+  peer0.source.example.com:
+    container_name: peer0.source.example.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.source.example.com
+      - CORE_PEER_ADDRESS=peer0.source.example.com:6051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:6051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.source.example.com:6052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:6052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.source.example.com:6051
+      - CORE_PEER_LOCALMSPID=SourceMSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/source.example.com/peers/peer0.source.example.com/msp:/etc/hyperledger/msp/peer
+        - ../crypto-config/peerOrganizations/source.example.com/users:/etc/hyperledger/msp/users
+        - peer0.source.example.com:/var/hyperledger/production
+    ports:
+      - 6051:6051
+
+  peer0.process.example.com:
+    container_name: peer0.process.example.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.process.example.com
+      - CORE_PEER_ADDRESS=peer0.process.example.com:7051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.process.example.com:7052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.process.example.com:7051
+      - CORE_PEER_LOCALMSPID=ProcessMSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/process.example.com/peers/peer0.process.example.com/msp:/etc/hyperledger/msp/peer
+        - ../crypto-config/peerOrganizations/process.example.com/users:/etc/hyperledger/msp/users
+        - peer0.process.example.com:/var/hyperledger/production
+
+    ports:
+      - 7051:7051
+
+  peer0.logistics.example.com:
+    container_name: peer0.logistics.example.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.logistics.example.com
+      - CORE_PEER_ADDRESS=peer0.logistics.example.com:8051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:8051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.logistics.example.com:8052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.logistics.example.com:8051
+      - CORE_PEER_LOCALMSPID=LogisticsMSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/logistics.example.com/peers/peer0.logistics.example.com/msp:/etc/hyperledger/msp/peer
+        - ../crypto-config/peerOrganizations/logistics.example.com/users:/etc/hyperledger/msp/users
+        - peer0.logistics.example.com:/var/hyperledger/production
+    ports:
+      - 8051:8051
+
+  peer0.sales.example.com:
+    container_name: peer0.sales.example.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.sales.example.com
+      - CORE_PEER_ADDRESS=peer0.sales.example.com:9051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.sales.example.com:9052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.sales.example.com:9051
+      - CORE_PEER_LOCALMSPID=SalesMSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/sales.example.com/peers/peer0.sales.example.com/msp:/etc/hyperledger/msp/peer
+        - ../crypto-config/peerOrganizations/sales.example.com/users:/etc/hyperledger/msp/users
+        - peer0.sales.example.com:/var/hyperledger/production
+    ports:
+      - 9051:9051

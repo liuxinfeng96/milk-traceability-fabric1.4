@@ -1,0 +1,52 @@
+{
+    "name": "Logistics",
+    "version": "1.0.0",
+    "client": {
+        "organization": "Logistics",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                },
+                "orderer": "300"
+            }
+        }
+    },
+    "channels": {
+        "firstchannel": {
+            "orderers": [
+                "orderer.example.com"
+            ],
+            "peers": {
+                "peer0.logistics.example.com": {}
+            }
+        }
+    },
+    "organizations": {
+        "Logistics": {
+            "mspid": "LogisticsMSP",
+            "peers": [
+                "peer0.logistics.example.com"
+            ],
+            "certificateAuthorities": [
+                "ca.logistics.example.com"
+            ]
+        }
+    },
+    "orderers": {
+        "orderer.example.com": {
+            "url": "grpc://localhost:7050"
+        }
+    },
+    "peers": {
+        "peer0.logistics.example.com": {
+            "url": "grpc://localhost:8051"
+        }
+    },
+    "certificateAuthorities": {
+        "ca.logistics.example.com": {
+            "url": "http://localhost:8054",
+            "caName": "ca-logistics"
+        }
+    }
+}

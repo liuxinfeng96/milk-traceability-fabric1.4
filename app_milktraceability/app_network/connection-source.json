@@ -1,0 +1,52 @@
+{
+    "name": "Source",
+    "version": "1.0.0",
+    "client": {
+        "organization": "Source",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                },
+                "orderer": "300"
+            }
+        }
+    },
+    "channels": {
+        "firstchannel": {
+            "orderers": [
+                "orderer.example.com"
+            ],
+            "peers": {
+                "peer0.source.example.com": {}
+            }
+        }
+    },
+    "organizations": {
+        "Source": {
+            "mspid": "SourceMSP",
+            "peers": [
+                "peer0.source.example.com"
+            ],
+            "certificateAuthorities": [
+                "ca.source.example.com"
+            ]
+        }
+    },
+    "orderers": {
+        "orderer.example.com": {
+            "url": "grpc://localhost:7050"
+        }
+    },
+    "peers": {
+        "peer0.source.example.com": {
+            "url": "grpc://localhost:6051"
+        }
+    },
+    "certificateAuthorities": {
+        "ca.source.example.com": {
+            "url": "http://localhost:6054",
+            "caName": "ca-source"
+        }
+    }
+}
